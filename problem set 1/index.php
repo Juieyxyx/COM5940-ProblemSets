@@ -58,12 +58,11 @@ $wp_query = new WP_Query($args);
 
      <h2 class="text-center text-uppercase text-white"><?php the_title(); ?></h2>
         <hr class="star-light mb-5">
-        <div class="row">
+
         <?php the_content(); ?>
 
       <?php endwhile;  endif; wp_reset_query(); ?>
 
-      </div>
     </section>
 
     <!-- Contact Section -->
