@@ -1,0 +1,69 @@
+import requests
+import csv
+from bs4 import BeautifulSoup
+
+quote_page = requests.get('https://www.douban.com/group/explore')
+soup = BeautifulSoup(quote_page.content,'html.parser')
+
+
+
+
+
+import requests
+import csv
+from bs4 import BeautifulSoup
+
+quote_page = requests.get('https://www.douban.com/group/explore')
+soup = BeautifulSoup(quote_page.content,'html.parser')
+data= []
+for article in soup.find_all('div',class_='channel-item'):
+   url = article.h3.a.get('href')
+   title = article.h3.a.string
+   content = article.p.string
+   group = article.span.a.string
+   data.append((url,title,content,group))
+
+with open('group.csv', 'w') as csv_file:
+   writer = csv.writer(csv_file)
+   header = ['url','title','content','group']
+   writer.writerow(header)
+   for url, title, content, group in data:
+      writer.writerow([url, title, content, group])
+
+
+
+
+
+
+
+%%time
+import requests
+import csv
+import pandas as pd
+from bs4 import BeautifulSoup
+from time import sleep
+from random import randint
+from time import time
+quote_page = requests.get('https://www.douban.com/group/explore')
+soup = BeautifulSoup(quote_page.content,'html.parser')
+header = ['url','title','content','group']
+data=[]
+
+for article in soup.find_all("div", attrs={'class':'channel-item'}):
+   url = article.h3.a.get('href')
+   title = article.h3.a.string.encode('utf-8').strip()
+   decoded_title = title.decode('utf-8')
+   content = article.p.string.encode('utf-8').strip()
+   decoded_content = content.decode('utf-8')
+   group = article.span.a.string.encode('utf-8').strip()
+   decoded_group = group.decode('utf-8')
+   print(url)
+   print(decoded_title)
+   print(decoded_content)
+   print(decoded_group)
+   data.append((url, decoded_title, decoded_content, decoded_group))
+
+df = pd.DataFrame(data,
+columns = header
+)
+df.to_csv('group.csv', sep='\t', encoding='utf-8')
