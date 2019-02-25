@@ -55,40 +55,56 @@
 
 
 
+<table id="table" class="table table-striped" style="width:100%; margin-top: 10rem;" >
+                   <thead>
+                     <tr>
 
-<div class="jumbotron text-center" style="margin-top: 10rem;">
-  <h1>Julie's C3 Chart Page</h1>
-  <p>Check the chart of the credits each user gets!</p>
-</div>
-<div class='container'>
- <div id="chart"></div>
-</div><!--end container-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script>
-      $(document).ready(function(){
-        var chart = c3.generate({
-                    data: {
-                        columns: [{% for user,point in entries %}
-                                    ['{{user}}',{{point}}],
-                                  {% endfor %}
-                                 ],
-                       type : 'bar'
-                     },
-                    axis: {
-                      x: {label: 'User'},
-                      y: {label: 'Points'}
-                    },
-                    bar: {
-                        title: "Points of each user:",
-                    },
-                    tooltip: {
-                        show: false,
-                    }
-                }); // end c3.generate
-      }); // end document ready
-</script>
+
+                   <th>name</th>
+                   <th>id</th>
+                   <th>event</th>
+                   <th>point</th>
+                   <th>time</th>
+                   <th>membership level</th>
+
+                     </tr>
+                   </thead>
+                   <tbody>
+                      {% for row in  entries  %}
+                         <tr>
+
+                             <td>{{ row["name"] }}</td>
+                             <td>{{ row["id"] }}</td>
+                             <td>{{ row["event"] }}</td>
+                             <td>{{ row["point"] }}</td>
+                             <td>{{ row["time"] }}</td>
+                             <td>{{ row["membership_level"] }}</td>
+
+                         </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+
+
+   <!-- Bootstrap core JavaScript -->
+   <script src="static/js/jquery.min.js"></script>
+   <script src="static/js/bootstrap.bundle.min.js"></script>
+   <script src="static/js/scriptlib.js"></script>
+
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+
+   <script>
+         $(document).ready(function(){
+             $('#table).DataTable({
+               "paging":   true,
+               "ordering": true,
+               "searching": true
+             });
+           });
+   </script>
+
+
 </body>
 </html>

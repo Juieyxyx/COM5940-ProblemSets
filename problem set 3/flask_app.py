@@ -33,7 +33,15 @@ def chart():
         point_list.append(item.get('point'))
     return render_template('chart.html', entries = zip(user_list, point_list))
 
-
+@app.route("/table")
+def table():
+    r = requests.get('https://api.airtable.com/v0/app2jDjVHPNoAHwhY/user_info?api_key=keyIvnCG4lnYkaCAs&view=Grid%20view')
+    dict = r.json()
+    dataset = []
+    for i in dict['records']:
+            dict = i['fields']
+            dataset.append(dict)
+    return render_template('table.html', entries=dataset)
 
 
 if __name__ == '__main__':
